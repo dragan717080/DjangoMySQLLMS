@@ -1,7 +1,7 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from .BaseView import BaseView
 from ..services.AssignmentService import AssignmentService
-from ..Utils import Utils
+from ..HttpUtils import HttpUtils
 
 class AssignmentView(BaseView):
     def __init__(self, http_method_names):

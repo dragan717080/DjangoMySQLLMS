@@ -10,7 +10,7 @@ class UserRepository(BaseRepository):
         user.save()
         return user
 
-    def update(self, id, username, email, password_hash):
+    def update(self, id, username, email, password_hash, status="student"):
         try:
             user = User.objects.get(pk=id)
         except User.DoesNotExist:
@@ -24,6 +24,11 @@ class UserRepository(BaseRepository):
 
         if password_hash:
             user.password_hash = password_hash
+
+        if status in [User.ROLE_STUDENT, User.ROLE_INSTRUCTOR]:
+            user.status = status
+        else:
+            return f"Undefined status {status}"
 
         user.save()
         return user
