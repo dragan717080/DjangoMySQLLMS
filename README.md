@@ -51,6 +51,7 @@ Returns
 
 ```
 200 SUCCESS
+
 [
     {
         "id": "57f67b18-4d39-49c8-bcaf-1c13a0e45c62",
@@ -76,6 +77,7 @@ Returns
 
 ```
 200 SUCCESS
+
 {
     "id": "8cb684a8-3670-47cc-a836-a787cb1d4220",
     "title": "Introduction to Programming Languages",
@@ -99,6 +101,7 @@ Returns
 Returns
 ```
 200 SUCCESS
+
 {
     "id": "e94fc211-acf4-4e1e-aa98-b4ce8947419e",
     "title": "Variables and Data Types",
@@ -115,6 +118,8 @@ Returns
 Returns
 
 ```
+200 SUCCESS
+
 {
     "message": "Deleted lesson with id e94fc211-acf4-4e1e-aa98-b4ce8947419e"
 }

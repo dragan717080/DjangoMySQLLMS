@@ -7,6 +7,10 @@ class LessonRepository(BaseRepository):
         self.module_repository = ModuleRepository()
         self.model = Lesson
 
+    # Overriding default method from BaseRepository
+    def get_all(self):
+        return self.model.objects.all().order_by('order')
+
     def create(self, title, content, module_id, order):
         module = self.module_repository.get_by_id(module_id)
         if not module:
