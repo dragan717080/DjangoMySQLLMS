@@ -1,55 +1,24 @@
-from django.http import JsonResponse
 from .BaseView import BaseView
-from ..services.AssignmentService import AssignmentService
+from ..repositories.AssignmentRepository import AssignmentRepository
 from ..HttpUtils import HttpUtils
 
 class AssignmentView(BaseView):
     def __init__(self, http_method_names):
-        self.assignment_service = AssignmentService()
-
-    def get_all(self):
-        return JsonResponse(self.assignment_service.get_all(), safe=False)
-
-    def get_by_id(self, id):
-        assignment = self.assignment_service.get_by_id(id)
-        return JsonResponse(assignment) if assignment else JsonResponse(status=404, data={"message": f"Assignment does not exist"})
+        self.model_repository = self.assignment_repository = AssignmentRepository()
+        super().__init__()
 
     def post(self, request):
-        try:
-            assignment_obj = {
-                "title": request.data["title"],
-                "description": request.data["description"],
-                "course_id": request.data["course_id"],
-                "due_date": request.data["due_date"],
-                "max_points": request.data["max_points"],
-            }
-        except Exception as e:
-            return JsonResponse(status=400, data={"message": f"Missing key: {e}"})
-
-        try:
-            assignment = self.assignment_service.create(**assignment_obj)
-            return JsonResponse(status=201, data=assignment.to_dict(), safe=False)
-        except Exception as e:
-            return JsonResponse(status=400, data={"message": f"Error creating Assignment: {e}"})
+        return HttpUtils.get_post_data(
+            request,
+            id,
+            ["title", "description", "course_id", "due_date", "max_points"], 
+            self.assignment_repository
+        )
 
     def patch(self, request, id):
-        assignment_obj = {
-            "title": request.data.get("title"),
-            "description": request.data.get("description"),
-            "course_id": request.data.get("course_id"),
-            "due_date": request.data.get("due_date"),
-            "max_points": request.data.get("max_points"),
-        }
-
-        try:
-            assignment = self.assignment_service.update(id, **assignment_obj)
-            return JsonResponse(assignment) if assignment else JsonResponse(status=404, data={"message": f"Assignment does not exist"})
-        except Exception as e:
-            return JsonResponse(status=400, data={"message": f"Error updating assignment: {e}"})
-
-    def delete(self, request, id):
-        assignment = self.assignment_service.delete(id)
-        if assignment:
-            return JsonResponse(status=204, data={"message": f"Deleted assignment with id {id}"})
-        else:
-            return JsonResponse(status=404, data={"message": f"Assignment does not exist"})
+        return HttpUtils.get_patch_data(
+            request,
+            id,
+            ["title", "description", "course_id", "due_date", "max_points"], 
+            self.assignment_repository
+        )

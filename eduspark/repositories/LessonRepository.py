@@ -30,9 +30,11 @@ class LessonRepository(BaseRepository):
         if order:
             lesson.order = order
 
-        module = self.module_repository.get_by_id(module_id)
-        if not module:
-            return "Module does not exist"
+        if module_id:
+            module = self.module_repository.get_by_id(module_id)
+            if not module:
+                return "Module does not exist"
+            lesson.module = module
 
         lesson.save()
         return lesson

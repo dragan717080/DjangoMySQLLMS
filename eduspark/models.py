@@ -88,7 +88,11 @@ class Enrollment(BaseModel):
         return f"Course {self.id}"
     
     def to_dict(self):
-        return f"Student: {self.student}, course: {self.course}"
+        return {
+            "student": self.student.username,
+            "course": self.course.title,
+            "enrollment_date": self.created_at
+        }
 
 class Module(BaseModel):
     title = CharField(max_length = 150)

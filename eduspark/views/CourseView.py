@@ -4,7 +4,8 @@ from ..HttpUtils import HttpUtils
 
 class CourseView(BaseView):
     def __init__(self, http_method_names):
-        self.course_repository = CourseRepository()
+        self.model_repository = self.course_repository = CourseRepository()
+        super().__init__()
 
     def post(self, request):
         return HttpUtils.get_post_data(

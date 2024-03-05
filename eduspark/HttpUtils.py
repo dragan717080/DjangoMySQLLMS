@@ -71,7 +71,11 @@ class HttpUtils(ABC):
                 })
 
         try:
-            module = repository.create(**model_obj)
-            return JsonResponse(status=201, data=module.to_dict(), safe=False)
+            model = repository.create(**model_obj)
+            # Given id does not exist
+            if isinstance(model, str):
+                return JsonResponse(status=404, data={"message": model})
+
+            return JsonResponse(status=201, data=model.to_dict())
         except Exception as e:
             return JsonResponse(status=400, data={"message": f"Error creating {model_name.lower()}: {e}"})

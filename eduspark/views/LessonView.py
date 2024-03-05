@@ -1,18 +1,19 @@
 from django.http import HttpResponse, JsonResponse
 from .BaseView import BaseView
-from ..services.LessonService import LessonService
+from ..repositories.LessonRepository import LessonRepository
 from ..HttpUtils import HttpUtils
 
 class LessonView(BaseView):
     def __init__(self, http_method_names):
-        self.lesson_repository = LessonService()
+        self.model_repository = self.lesson_repository = LessonRepository()
+        super().__init__()
 
     def post(self, request):
         return HttpUtils.get_post_data(
             request,
             id,
             ["title", "content", "module_id", "order"], 
-            self.module_repository
+            self.lesson_repository
         )
 
     def patch(self, request, id):
@@ -20,5 +21,5 @@ class LessonView(BaseView):
             request,
             id,
             ["title", "content", "module_id", "order"], 
-            self.module_repository
+            self.lesson_repository
         )

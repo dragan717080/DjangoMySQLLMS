@@ -9,6 +9,10 @@ class CourseRepository(BaseRepository):
 
     def create(self, title, description, instructor_id, start_date, end_date):
         instructor = self.user_repository.get_by_id(instructor_id)
+        if not instructor:
+            return "Instructor does not exist"
+        if instructor.status != "instructor":
+            return "User is not instructor"
         course = Course(title=title, description=description, instructor_id=instructor.id, start_date=start_date, end_date=end_date)
         course.save()
         return course

@@ -1,5 +1,6 @@
 from ..models import User
 from .BaseRepository import BaseRepository
+from django.conf import settings
 
 class UserRepository(BaseRepository):
     def __init__(self):
@@ -15,7 +16,7 @@ class UserRepository(BaseRepository):
             user = User.objects.get(pk=id)
         except User.DoesNotExist:
             return None
-        
+
         if username:
             user.username = username
 
@@ -25,10 +26,11 @@ class UserRepository(BaseRepository):
         if password_hash:
             user.password_hash = password_hash
 
-        if status in [User.ROLE_STUDENT, User.ROLE_INSTRUCTOR]:
-            user.status = status
-        else:
-            return f"Undefined status {status}"
+        if status:
+            if status in [User.ROLE_STUDENT, User.ROLE_INSTRUCTOR]:
+                user.status = status
+            else:
+                return f"Undefined status {status}"
 
         user.save()
         return user

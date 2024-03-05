@@ -11,7 +11,7 @@ class UserView(BaseView):
         return HttpUtils.get_post_data(
             request,
             id,
-            ["username", "email", "password_hash", "status"], 
+            ["username", "email", "password_hash"], 
             self.user_repository, 
             [
                 { "status": "student" }
