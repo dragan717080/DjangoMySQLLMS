@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.core.handlers.wsgi import WSGIRequest
 import re
 import json
