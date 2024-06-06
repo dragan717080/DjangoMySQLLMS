@@ -1,6 +1,5 @@
 from ..models import User
 from .BaseRepository import BaseRepository
-from django.conf import settings
 
 class UserRepository(BaseRepository):
     def __init__(self):

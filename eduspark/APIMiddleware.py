@@ -10,7 +10,10 @@ class APIMiddleware:
     def __call__(self, request):
         # Email validation for users route, also matches /users/{id}
         if request.path.startswith('/users') and request.method in ['POST', 'PATCH']:
-            self.validate_email(request)
+            # If it didn't pass email validation, return an error
+            email_response = self.validate_email(request)
+            if email_response:
+                return email_response
         # Passing request to the next view
         response = self.get_response(request)
 
