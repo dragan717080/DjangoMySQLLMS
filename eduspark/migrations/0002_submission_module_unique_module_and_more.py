@@ -30,5 +30,9 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name='module',
             constraint=models.UniqueConstraint(fields=('title', 'course'), name='unique_module'),
+        ),
+        migrations.AddConstraint(
+            model_name='enrollment',
+            constraint=models.UniqueConstraint(fields=('student', 'course'), name='unique_enrollment'),
         )
     ]

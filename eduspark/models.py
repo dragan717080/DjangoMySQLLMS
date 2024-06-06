@@ -79,10 +79,10 @@ class Enrollment(BaseModel):
     class Meta:
         db_table = 'enrollments'
 
-    # Ensure unique combination of student and course
-    constraints = [
-        UniqueConstraint(fields=['student', 'course'], name='unique_enrollment')
-    ]
+        # Ensure unique combination of student and course
+        constraints = [
+            UniqueConstraint(fields=['student', 'course'], name='unique_enrollment')
+        ]
 
     def __str__(self):
         return f"Course {self.id}"
